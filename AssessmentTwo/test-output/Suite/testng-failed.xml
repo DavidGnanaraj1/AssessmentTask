@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test thread-count="5" name="Test(failed)">
+    <classes>
+      <class name="com.atmecs.automation.testscripts.VerifyFootersAndContexts">
+        <methods>
+          <include name="gridMethod"/>
+          <include name="verifyFooterContext"/>
+        </methods>
+      </class> <!-- com.atmecs.automation.testscripts.VerifyFootersAndContexts -->
+      <class name="com.atmecs.automation.testscripts.VerifyBlogs">
+        <methods>
+          <include name="driverClose"/>
+          <include name="verifyBlogDetails"/>
+          <include name="suitemethod"/>
+          <include name="initializeBrowser"/>
+        </methods>
+      </class> <!-- com.atmecs.automation.testscripts.VerifyBlogs -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

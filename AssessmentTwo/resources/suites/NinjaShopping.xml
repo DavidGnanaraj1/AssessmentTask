@@ -1,0 +1,10 @@
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="NinjaShopping">
+
+<test name="NinjaShopping-Test">
+		<classes>
+			<class name="com.atmecs.automation.testscripts.PurchasingProduct" />
+		</classes>
+	</test>
+</suite>
