@@ -25,37 +25,39 @@ public class HeatClinicAutomation extends BrowserInvoke {
 
 @Test
 public void shoppingautomation() throws IOException, InterruptedException {
-
+	   
+	    PropertiesFileReader.loadingPropertyFile(FilePath.SCE2EXPECTEDDATA_FILE);
 		PageActionsScroll pageactscroll = new PageActionsScroll();
 		int footerno=6;
+		String homefootertitleexp=PropertiesFileReader.gettingPropertyFileData("expdata.linktextpagetitle");
+		String homefootertitleexparr[]=new String[footerno];
+		homefootertitleexparr=homefootertitleexp.split(",");
+
+	    PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
+	   
+ 	    PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.hotsauce"));
+ 	    String acthotsauce=driver.getTitle();
+  		Assert.assertEquals(homefootertitleexparr[0], acthotsauce);
+  		PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.merchandise"));
+ 	    String actmerchandise=driver.getTitle();
+  		Assert.assertEquals(homefootertitleexparr[1],actmerchandise);
+  		
+  		PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.clearance"));
+ 	    String actclearancetit=driver.getTitle();
+  	    Assert.assertEquals(homefootertitleexparr[2],actclearancetit);
+  	    PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.newtohotsauce"));
+		String actnewtohotsauce=driver.getTitle();
+		Assert.assertEquals(homefootertitleexparr[3],actnewtohotsauce);
+	    PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.faq"));
+	    String actfaq=driver.getTitle();
+	    Assert.assertEquals(homefootertitleexparr[4],actfaq);
 		
-//        for(int footerindex=0;footerindex<footerno;footerindex++) {
-//        PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
-//
-//        PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.home"));
-//	    String footerlinktextfir=PropertiesFileReader.gettingPropertyFileData("loc.footerlinktextstart");
-//	    String footerlinktextmid=Integer.toString(footerindex+1);
-//	    String footerlinktextend=PropertiesFileReader.gettingPropertyFileData("loc.footerlinkendtext");
-//        String footerlinkfulltext=footerlinktextfir+footerlinktextmid+footerlinktextend;
-//    	PropertiesFileReader.loadingPropertyFile(FilePath.SCE2EXPECTEDDATA_FILE);
-// 		WebElement footerlinkhome = driver.findElement(By.cssSelector(footerlinkfulltext));
-// 		footerlinkhome.click();
-// 		
-// 		String homefooterexp=PropertiesFileReader.gettingPropertyFileData("expdata.title");
-//	String homefootertitleact=driver.getTitle();
-//		Assert.assertEquals(homefooterexp,homefootertitleact);
-//	
-//		String homefootertitleexp=PropertiesFileReader.gettingPropertyFileData("expdata.linktextpagetitle");
-//		String homefootertitleexparr[]=new String[footerno];
-//		homefootertitleexparr=homefootertitleexp.split(",");
-//		Assert.assertEquals(homefootertitleexparr[footerindex],homefootertitleact);
-//		}	
-        
-        WebElement merchandise=driver.findElement(By.xpath("//a[@href='/merchandise']"));
+        PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
+        WebElement merchandise=driver.findElement(By.cssSelector("#content>nav>ul li:nth-child(3) a"));
         Actions actions = new Actions(driver);
         actions.moveToElement(merchandise).build().perform();
-        PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
-        PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.men"));
+
+        PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.men"));
 		
         String textexpval[]= new String[2];
 		textexpval[0] = "Viewing";
@@ -70,32 +72,37 @@ public void shoppingautomation() throws IOException, InterruptedException {
 		PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
 		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.buynow"));
 		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.redcolour"));
+		actions.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
 		
 		for (int index = 0; index < 3; index++) {
-			actions.sendKeys(Keys.TAB).click();
+			actions.sendKeys(Keys.TAB);
 		}
-
+		actions.sendKeys(Keys.ENTER);
+		driver.findElement(By.xpath(PropertiesFileReader.gettingPropertyFileData("loc.sizem"))).click();
+		Thread.sleep(3000);
+		
 		for (int index = 0; index < 3; index++) {
 			actions.sendKeys(Keys.TAB).click();
 		}		
 		
 		PageActions.sendKeys(driver, PropertiesFileReader.gettingPropertyFileData("loc.personalisedname"), "david");
-
-		// PageActions.click(driver,
-		// PropertiesFileReader.gettingPropertyFileData("loc.addtocart"));
-		driver.findElement(By.cssSelector(".simplemodal-wrap")).click();
-		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.personalisedname"));
-		actions.sendKeys(Keys.TAB).click();
-		driver.findElement(By.xpath("//a[@title='Close']")).click();
-		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.viewcart"));
-
+        WebElement buynowelem=driver.findElement(By.cssSelector("div.product-options:nth-of-type(1)>input[value=\"Buy Now!\"]"));
+        pageactscroll.scrolDownTillElementOccurs(driver,buynowelem);
+        PageActions.explicitwait(driver, buynowelem);
+        buynowelem.click();
+	
+        WebElement viewcart=driver.findElement(By.cssSelector(".modalcart"));
+        PageActions.explicitwait(driver,viewcart);
+        PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.viewcart"));
+        
 		List<WebElement> cartpdtdetelements = driver.findElements(
-				LocatorSelector.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.cartdet")));
+	    LocatorSelector.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.cartdet")));
 		String cartactualarray[] = null;
 		String cartdettextexpval[] = new String[cartpdtdetelements.size()];
 		PropertiesFileReader.loadingPropertyFile(FilePath.SCE2EXPECTEDDATA_FILE);
 		String cartdettexpvalstring = PropertiesFileReader.gettingPropertyFileData("expdata.detailsincart");
-
+        
 		for (int index = 0; index < cartpdtdetelements.size(); index++) {
 			cartdettextexpval = cartdettexpvalstring.split(",");
 			cartpdtdetelements.get(index);
@@ -103,50 +110,40 @@ public void shoppingautomation() throws IOException, InterruptedException {
 			if (!(cartdettextexpval[index] == cartdettextexpval[index])) {
 				System.out.println(" Cart details is not matching");
 			}
-		//	Assert.assertEquals(cartdettextexpval[index], );
 		}
+		
 		Thread.sleep(3000);
-		// PageActions.explicitwait(driver,LocatorSelector.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.unitpdtprz")));
+		PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
 		String shtprzact = driver.findElement(
 				LocatorSelector.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.unitpdtprz")))
 				.getText();
+		PropertiesFileReader.loadingPropertyFile(FilePath.SCE2EXPECTEDDATA_FILE);
 		Assert.assertEquals(PropertiesFileReader.gettingPropertyFileData("expdata.shtunitprz"), shtprzact);
-		PropertiesFileReader.gettingPropertyFileData(FilePath.SCE2LOCATORS_FILE);
+		
+		
 		String shtnameact = driver
-				.findElement(LocatorSelector
-						.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.pdtnameincart")))
+				.findElement(By.xpath("(//a[@href='/merchandise/hawt_like_a_habanero_mens'])[2]"))
 				.getText();
 		Assert.assertEquals(PropertiesFileReader.gettingPropertyFileData("expdata.shtname"), shtnameact);
-
-		String shttotprzact = driver.findElement(
-				LocatorSelector.separatingLocators(PropertiesFileReader.gettingPropertyFileData("loc.unitpdtprz")))
-				.getText();
-		PropertiesFileReader.gettingPropertyFileData(FilePath.SCE2EXPECTEDDATA_FILE);
-
+		
+		String shtunitprzact = driver.findElement(By.xpath("(//td[@align='center'])[2]")).getText();
 		String input = PropertiesFileReader.gettingPropertyFileData("expdata.shtunitprz");
 		String unitprzresult = input.replaceAll("[$-+.^:,]", "");
 		int unitprz = Integer.parseInt(unitprzresult);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		String sText = js.executeScript("return document.value;").toString();
-		System.out.println(sText);
-
-		int quantity = Integer.parseInt(sText);
-		int totprz = unitprz * quantity;
-		String totalprz = Integer.toString(totprz);
-		Assert.assertEquals(totalprz, shttotprzact);
-
-		PageActions.click(driver, "loc.updbtn");
-		WebElement uparrows = driver.findElement(LocatorSelector.separatingLocators("loc.incrqty"));
-
-		actions.moveToElement(uparrows).build().perform();
-
-		String sText2 = js.executeScript("return document.value;").toString();
+		String shttotprzact = driver.findElement(By.xpath("(//td[@align='center'])[4]")).getText();
+    	Assert.assertEquals(PropertiesFileReader.gettingPropertyFileData("expdata.shttotprz"),shttotprzact);
+		PropertiesFileReader.loadingPropertyFile(FilePath.SCE2LOCATORS_FILE);
+   	    driver.findElement(By.cssSelector(PropertiesFileReader.gettingPropertyFileData("loc.quantityboxincart"))).click();
+        actions.sendKeys(Keys.BACK_SPACE);
+        driver.findElement(By.cssSelector(PropertiesFileReader.gettingPropertyFileData("loc.quantityboxincart"))).sendKeys("2");
+        PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.updbtn"));
+        JavascriptExecutor js=(JavascriptExecutor)driver;
+		String sText2 = js.executeScript("return document.querySelector(\".name+td input:nth-child(4)\").value;").toString();
 		System.out.println(sText2);
+	
 		int sTextvalue = Integer.parseInt(sText2);
 		if (!(sTextvalue == 2)) {
 			System.out.println("Not updating in the cart");
 		}
-	
 	}
 }

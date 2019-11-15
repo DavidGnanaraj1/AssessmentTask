@@ -31,11 +31,11 @@ public class PageActions {
 		element.sendKeys(value);
 	}
 
-	public static void explicitwait(WebDriver driver, By byvalue) {
+	public static void explicitwait(WebDriver driver, WebElement element) {
 
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(byvalue));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
 
 	}
 }

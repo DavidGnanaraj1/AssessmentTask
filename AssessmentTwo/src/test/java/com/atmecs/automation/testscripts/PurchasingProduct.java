@@ -176,19 +176,7 @@ public class PurchasingProduct extends BrowserInvoke {
 			Assert.assertEquals(extaxexp,extaxact);
 			
 		
-		PropertiesFileReader.loadingPropertyFile(FilePath.EXPECTEDDATA_FILE);
-		String expdata=PropertiesFileReader.gettingPropertyFileData("expdata.errorinput");
-		PropertiesFileReader.loadingPropertyFile(FilePath.LOCATORS_FILE);
-		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.searchinputbox"));
-		PageActions.sendKeys(driver,PropertiesFileReader.gettingPropertyFileData("loc.searchinputbox"),expdata);
-		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.searchbtn"));
 		
-		PropertiesFileReader.loadingPropertyFile(FilePath.EXPECTEDDATA_FILE);
-		PageActionsScroll.scrollUp(driver, "-700");
-		String experrmsg=PropertiesFileReader.gettingPropertyFileData("expdata.errormsg");   
-		PropertiesFileReader.loadingPropertyFile(FilePath.LOCATORS_FILE);
-		String acterrmsg=driver.findElement(By.cssSelector(PropertiesFileReader.gettingPropertyFileData("loc.negsce"))).getText();
-		Assert.assertEquals(experrmsg,acterrmsg);
 		
 		PropertiesFileReader.loadingPropertyFile(FilePath.LOCATORS_FILE);
 		PageActions.click(driver,PropertiesFileReader.gettingPropertyFileData("loc.viewcart"));
@@ -208,7 +196,19 @@ public class PurchasingProduct extends BrowserInvoke {
 	   	Assert.assertEquals(grandtotforsinglepdt1[pdtqtyindex],grandtotact1);
 
 		}
+		PropertiesFileReader.loadingPropertyFile(FilePath.EXPECTEDDATA_FILE);
+		String expdata=PropertiesFileReader.gettingPropertyFileData("expdata.errorinput");
+		PropertiesFileReader.loadingPropertyFile(FilePath.LOCATORS_FILE);
+		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.searchinputbox"));
+		PageActions.sendKeys(driver,PropertiesFileReader.gettingPropertyFileData("loc.searchinputbox"),expdata);
+		PageActions.click(driver, PropertiesFileReader.gettingPropertyFileData("loc.searchbtn"));
 		
+		PropertiesFileReader.loadingPropertyFile(FilePath.EXPECTEDDATA_FILE);
+		PageActionsScroll.scrollUp(driver, "-700");
+		String experrmsg=PropertiesFileReader.gettingPropertyFileData("expdata.errormsg");   
+		PropertiesFileReader.loadingPropertyFile(FilePath.LOCATORS_FILE);
+		String acterrmsg=driver.findElement(By.cssSelector(PropertiesFileReader.gettingPropertyFileData("loc.negsce"))).getText();
+		Assert.assertEquals(experrmsg,acterrmsg);
 	}
 
 }
